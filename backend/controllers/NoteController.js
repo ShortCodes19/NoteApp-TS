@@ -40,8 +40,34 @@ export const updateNote = asyncHandler(async (req, res) => {
     runValidators: true,
   });
 
+  if (!note) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
   return res.status(200).json({
     message: "Note updated",
     note,
+  });
+});
+
+export const deleteNote = asyncHandler(async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).json({
+      message: "Invalid note id",
+    });
+  }
+
+  const note = await Note.findByIdAndDelete(req.params.id);
+
+  if (!note) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Note deleted!",
   });
 });
