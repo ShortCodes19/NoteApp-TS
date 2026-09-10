@@ -8,7 +8,12 @@ interface NoteFormProps {
   onCancel?: () => void;
 }
 
-const NoteForm = ({ onAdd, editingId, updateNote, onCancel }: NoteFormProps) => {
+const NoteForm = ({
+  onAdd,
+  editingId,
+  updateNote,
+  onCancel,
+}: NoteFormProps) => {
   const [inputs, setInputs] = useState({ title: "", content: "" });
 
   useEffect(() => {
