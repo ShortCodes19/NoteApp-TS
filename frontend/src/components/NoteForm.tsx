@@ -1,11 +1,22 @@
-import React, { useState } from "react";
-import type { CreateNoteType } from "../types/NoteType";
+import React, { useEffect, useState } from "react";
+import type { CreateNoteType, NoteType } from "../types/NoteType";
 
 interface NoteFormProps {
   onAdd: (note: CreateNoteType) => void;
+  updateNote: (id: string, updatedNote: CreateNoteType) => void;
+  editingId: NoteType | null;
 }
-const NoteForm = ({ onAdd }: NoteFormProps) => {
+const NoteForm = ({ onAdd, updateNote, editingId }: NoteFormProps) => {
   const [inputs, setInputs] = useState({ title: "", content: "" });
+
+  useEffect(() => {
+    if (editingId) {
+      setInputs({
+        title: editingId.title,
+        content: editingId.content,
+      });
+    }
+  }, [editingId]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -26,7 +37,12 @@ const NoteForm = ({ onAdd }: NoteFormProps) => {
       content: inputs.content.trim(),
     };
 
-    onAdd(newNote);
+    if (editingId !== null) {
+      updateNote(editingId._id, newNote);
+    } else {
+      onAdd(newNote);
+    }
+
     setInputs({ title: "", content: "" });
   };
   return (
@@ -47,7 +63,7 @@ const NoteForm = ({ onAdd }: NoteFormProps) => {
           placeholder="Write..."
         ></textarea>
 
-        <button type="submit">Add</button>
+        <button type="submit">{editingId ? "Update" : "Add"}</button>
       </form>
     </div>
   );

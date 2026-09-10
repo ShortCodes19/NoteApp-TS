@@ -5,6 +5,7 @@ import NoteList from "./components/NoteList";
 
 const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
+  const [editingId, setEditingId] = useState<NoteType | null>(null);
 
   const createNote = (note: CreateNoteType): void => {
     const newNote = { _id: crypto.randomUUID(), ...note };
@@ -15,10 +16,30 @@ const App = () => {
     setNotes((prev) => prev.filter((note) => note._id !== id));
   };
 
+  const editNote = (id: string): void => {
+    const note = notes.find((note) => note._id === id);
+
+    if (!note) return;
+    setEditingId(note);
+  };
+
+  const updateNote = (id: string, updatedNote: CreateNoteType): void => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note._id === id ? { ...note, ...updatedNote } : note,
+      ),
+    );
+    setEditingId(null);
+  };
+
   return (
     <div>
-      <NoteForm onAdd={createNote} />
-      <NoteList notes={notes} onDelete={deleteNote} />
+      <NoteForm
+        onAdd={createNote}
+        editingId={editingId}
+        updateNote={updateNote}
+      />
+      <NoteList notes={notes} onDelete={deleteNote} onEdit={editNote} />
     </div>
   );
 };

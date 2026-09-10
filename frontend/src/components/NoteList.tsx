@@ -4,16 +4,22 @@ import NoteCard from "./NoteCard";
 interface NoteListProps {
   notes: NoteType[];
   onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 }
 
-const NoteList = ({ notes, onDelete }: NoteListProps) => {
+const NoteList = ({ notes, onDelete, onEdit }: NoteListProps) => {
   return (
     <ul>
       {notes.length === 0 ? (
         <p>No notes yet</p>
       ) : (
         notes.map((note) => (
-          <NoteCard key={note._id} note={note} onDelete={onDelete} />
+          <NoteCard
+            key={note._id}
+            note={note}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
         ))
       )}
     </ul>
