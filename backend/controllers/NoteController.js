@@ -16,3 +16,14 @@ export const getNotes = asyncHandler(async (req, res) => {
 
   return res.status(200).json(notes);
 });
+
+export const getNote = asyncHandler(async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).json({
+      message: "Invalid note id",
+    });
+  }
+  const note = await Note.findById(req.params.id);
+
+  return res.status(200).json(note);
+});
