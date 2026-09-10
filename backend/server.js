@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/AppDB.js";
 import NoteRoute from "./routes/NoteRoute.js";
+import authRoutes from "./routes/authRoutes.js";
 import { notFound, errorMiddleware } from "./middleware/errorMiddleware.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
   res.send("App is working");
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/notes", NoteRoute);
 
 // Error handling — must be registered AFTER all routes
