@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/AppDB.js";
 import NoteRoute from "./routes/NoteRoute.js";
 import { notFound, errorMiddleware } from "./middleware/errorMiddleware.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 connectDB();
@@ -10,6 +12,13 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL,
+  }),
+);
 
 app.get("/", (req, res) => {
   res.send("App is working");
