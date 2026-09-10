@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/AppDB.js";
 import NoteRoute from "./routes/NoteRoute.js";
+import { notFound, errorMiddleware } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/notes", NoteRoute);
+
+// Error handling — must be registered AFTER all routes
+app.use(notFound);
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 3002;
 
