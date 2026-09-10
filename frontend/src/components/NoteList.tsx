@@ -8,20 +8,19 @@ interface NoteListProps {
 }
 
 const NoteList = ({ notes, onDelete, onEdit }: NoteListProps) => {
+  if (notes.length === 0) {
+    return <p>No notes yet!</p>;
+  }
   return (
     <ul>
-      {notes.length === 0 ? (
-        <p>No notes yet</p>
-      ) : (
-        notes.map((note) => (
-          <NoteCard
-            key={note._id}
-            note={note}
-            onDelete={onDelete}
-            onEdit={onEdit}
-          />
-        ))
-      )}
+      {notes.map((note) => (
+        <NoteCard
+          key={note._id}
+          note={note}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+      ))}
     </ul>
   );
 };

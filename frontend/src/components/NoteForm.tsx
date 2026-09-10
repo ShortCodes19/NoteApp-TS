@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { CreateNoteType, NoteType } from "../types/NoteType";
 
 interface NoteFormProps {
-  onAdd: (note: CreateNoteType) => void;
+  onAdd: (note: CreateNoteType) => Promise<void>;
   updateNote: (id: string, updatedNote: CreateNoteType) => void;
   editingId: NoteType | null;
   onCancel: () => void;
@@ -36,7 +36,7 @@ const NoteForm = ({
     }));
   };
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputs.title.trim() || !inputs.content.trim()) return;
 

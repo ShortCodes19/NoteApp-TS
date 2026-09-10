@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import type { CreateNoteType, NoteType } from "./types/NoteType";
 import NoteForm from "./components/NoteForm";
 import NoteList from "./components/NoteList";
-import { getNotesAPI } from "./services/NoteApi";
+import {
+  getNotesAPI,
+  createNoteAPI,
+  deleteNoteAPI,
+  updateNoteAPI,
+} from "./services/NoteApi";
 
 const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -20,13 +25,22 @@ const App = () => {
     loadNote();
   }, []);
 
-  const createNote = (note: CreateNoteType): void => {
-    const newNote = { _id: crypto.randomUUID(), ...note };
-    setNotes((prev) => [...prev, newNote]);
+  const createNote = async (note: CreateNoteType): Promise<void> => {
+    try {
+      const data = await createNoteAPI(note);
+      setNotes((prev) => [...prev, data.note]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteNote = (id: string): void => {
-    setNotes((prev) => prev.filter((note) => note._id !== id));
+  const deleteNote = async (id: string): Promise<void> => {
+    try {
+      await deleteNoteAPI(id);
+      setNotes((prev) => prev.filter((note) => note._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const editNote = (id: string): void => {
@@ -36,12 +50,18 @@ const App = () => {
     setEditingId(note);
   };
 
-  const updateNote = (id: string, updatedNote: CreateNoteType): void => {
-    setNotes((prev) =>
-      prev.map((note) =>
-        note._id === id ? { ...note, ...updatedNote } : note,
-      ),
-    );
+  const updateNote = async (
+    id: string,
+    updatedNote: CreateNoteType,
+  ): Promise<void> => {
+    try {
+      const data = await updateNoteAPI(id, updatedNote);
+      setNotes((prev) =>
+        prev.map((note) => (note._id === id ? data.note : note)),
+      );
+    } catch (error) {
+      console.log(error);
+    }
     setEditingId(null);
   };
 
@@ -51,6 +71,7 @@ const App = () => {
 
   return (
     <div>
+      <p>{notes.length}</p>
       <NoteForm
         onAdd={createNote}
         editingId={editingId}
