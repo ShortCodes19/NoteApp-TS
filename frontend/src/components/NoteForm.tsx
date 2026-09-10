@@ -5,8 +5,14 @@ interface NoteFormProps {
   onAdd: (note: CreateNoteType) => void;
   updateNote: (id: string, updatedNote: CreateNoteType) => void;
   editingId: NoteType | null;
+  onCancel: () => void;
 }
-const NoteForm = ({ onAdd, updateNote, editingId }: NoteFormProps) => {
+const NoteForm = ({
+  onAdd,
+  updateNote,
+  editingId,
+  onCancel,
+}: NoteFormProps) => {
   const [inputs, setInputs] = useState({ title: "", content: "" });
 
   useEffect(() => {
@@ -15,6 +21,8 @@ const NoteForm = ({ onAdd, updateNote, editingId }: NoteFormProps) => {
         title: editingId.title,
         content: editingId.content,
       });
+    } else {
+      setInputs({ title: "", content: "" });
     }
   }, [editingId]);
 
@@ -64,6 +72,11 @@ const NoteForm = ({ onAdd, updateNote, editingId }: NoteFormProps) => {
         ></textarea>
 
         <button type="submit">{editingId ? "Update" : "Add"}</button>
+        {editingId && onCancel && (
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );

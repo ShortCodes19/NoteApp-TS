@@ -32,12 +32,17 @@ const App = () => {
     setEditingId(null);
   };
 
+  const canceledit = () => {
+    setEditingId(null);
+  };
+
   return (
     <div>
       <NoteForm
         onAdd={createNote}
         editingId={editingId}
         updateNote={updateNote}
+        onCancel={canceledit}
       />
       <NoteList notes={notes} onDelete={deleteNote} onEdit={editNote} />
     </div>
