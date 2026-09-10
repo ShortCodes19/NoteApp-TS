@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CreateNoteType, NoteType } from "./types/NoteType";
 import NoteForm from "./components/NoteForm";
 import NoteList from "./components/NoteList";
+import { getNotesAPI } from "./services/NoteApi";
 
 const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [editingId, setEditingId] = useState<NoteType | null>(null);
+
+  useEffect(() => {
+    const loadNote = async () => {
+      try {
+        const data = await getNotesAPI();
+        setNotes(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadNote();
+  }, []);
 
   const createNote = (note: CreateNoteType): void => {
     const newNote = { _id: crypto.randomUUID(), ...note };
