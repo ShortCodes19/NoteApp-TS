@@ -27,3 +27,21 @@ export const getNote = asyncHandler(async (req, res) => {
 
   return res.status(200).json(note);
 });
+
+export const updateNote = asyncHandler(async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).json({
+      message: "Invalid note id",
+    });
+  }
+
+  const note = await Note.findByIdAndUpdate(req.params.id, req.body, {
+    returnDocument: "after",
+    runValidators: true,
+  });
+
+  return res.status(200).json({
+    message: "Note updated",
+    note,
+  });
+});
