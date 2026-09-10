@@ -10,3 +10,9 @@ export const createNote = asyncHandler(async (req, res) => {
     note,
   });
 });
+
+export const getNotes = asyncHandler(async (req, res) => {
+  const notes = await Note.find();
+
+  return res.status(200).json(notes);
+});
