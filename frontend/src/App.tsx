@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { CreateNoteType, NoteType } from "./types/NoteType";
 import NoteForm from "./components/NoteForm";
+import NoteList from "./components/NoteList";
 
 const App = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -10,10 +11,10 @@ const App = () => {
     setNotes((prev) => [...prev, newNote]);
   };
 
-  console.log(notes);
   return (
     <div>
       <NoteForm onAdd={createNote} />
+      <NoteList notes={notes} />
     </div>
   );
 };
