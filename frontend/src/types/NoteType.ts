@@ -15,6 +15,8 @@ interface authResponse {
   };
 }
 
+type checkAuthResponse = Omit<authResponse, "message">;
+
 interface registerType {
   name: string;
   email: string;
@@ -23,4 +25,11 @@ interface registerType {
 
 type loginType = Omit<registerType, "name">;
 
-export type { CreateNoteType, NoteType, registerType, loginType, authResponse };
+export type {
+  CreateNoteType,
+  NoteType,
+  registerType,
+  loginType,
+  authResponse,
+  checkAuthResponse,
+};
