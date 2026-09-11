@@ -13,7 +13,7 @@ import { useAuth } from "../context/AuthContext";
 const Notes = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [editingId, setEditingId] = useState<NoteType | null>(null);
-  const { user, loading } = useAuth();
+  const { logout } = useAuth();
 
   useEffect(() => {
     const loadNote = async () => {
@@ -71,16 +71,9 @@ const Notes = () => {
     setEditingId(null);
   };
 
-  if (loading) {
-    return <p>Checking authentication...</p>;
-  }
-
-  if (!user) {
-    return <p>Please log in.</p>;
-  }
-
   return (
     <div>
+      <button onClick={logout}>Logout</button>
       <p>{notes.length}</p>
       <NoteForm
         onAdd={createNote}

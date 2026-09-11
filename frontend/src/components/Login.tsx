@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { loginUserAPI } from "../services/AuthApi";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const { setUser } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -19,8 +21,12 @@ const Login = () => {
 
     try {
       const response = await loginUserAPI(inputs);
-      console.log(response);
+
+      setUser(response.user);
+      console.log("Login success: ", response);
       navigate("/notes");
+
+      console.log("navigation called");
     } catch (error) {
       console.log(error);
     }

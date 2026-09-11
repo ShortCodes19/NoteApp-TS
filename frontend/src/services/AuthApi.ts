@@ -31,3 +31,13 @@ export const loginUserAPI = async (data: loginType): Promise<authResponse> => {
   });
   return response.data;
 };
+
+export const logoutUserAPI = async (): Promise<void> => {
+  await axios.post(
+    `${API_URL}/logout`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+};
