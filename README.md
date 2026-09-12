@@ -50,7 +50,7 @@ A modern, full-stack note-taking application that lets you capture, organize, an
 
 ## 📁 Project Structure
 
-```
+````
 NoteAppTs/
 ├── backend/                    # Express REST API
 │   ├── config/
@@ -126,13 +126,13 @@ NODE_ENV=development
 JWT_SECRET=your-super-secret-key
 ```
 
-| Variable         | Description                                             |
-| ---------------- | ------------------------------------------------------- |
-| `PORT`           | Port the API listens on (default: `3002`)               |
-| `MONGO_URL`      | MongoDB connection string                               |
-| `FRONTEND_URL`   | Allowed CORS origin (the Vite dev server URL)           |
-| `NODE_ENV`       | `development` / `production`                            |
-| `JWT_SECRET`     | Secret used to sign and verify JWT tokens               |
+| Variable       | Description                                   |
+| -------------- | --------------------------------------------- |
+| `PORT`         | Port the API listens on (default: `3002`)     |
+| `MONGO_URL`    | MongoDB connection string                     |
+| `FRONTEND_URL` | Allowed CORS origin (the Vite dev server URL) |
+| `NODE_ENV`     | `development` / `production`                  |
+| `JWT_SECRET`   | Secret used to sign and verify JWT tokens     |
 
 #### Frontend — `frontend/.env`
 
@@ -141,10 +141,10 @@ VITE_NOTE_API=http://localhost:3002/api/notes
 VITE_AUTH_API=http://localhost:3002/api/auth
 ```
 
-| Variable          | Description                                    |
-| ----------------- | ---------------------------------------------- |
-| `VITE_NOTE_API`   | Base URL for the notes API                     |
-| `VITE_AUTH_API`   | Base URL for the authentication API            |
+| Variable        | Description                         |
+| --------------- | ----------------------------------- |
+| `VITE_NOTE_API` | Base URL for the notes API          |
+| `VITE_AUTH_API` | Base URL for the authentication API |
 
 ### 3. Install dependencies & run
 
@@ -168,18 +168,18 @@ Then open **http://localhost:5173** in your browser.
 
 **Backend** (`backend/`):
 
-| Script | Description                          |
-| ------ | ------------------------------------ |
+| Script     | Description                     |
+| ---------- | ------------------------------- |
 | `pnpm dev` | Start the server with `nodemon` |
 
 **Frontend** (`frontend/`):
 
-| Script        | Description                            |
-| ------------- | -------------------------------------- |
-| `pnpm dev`     | Start the Vite dev server        |
-| `pnpm build`   | Type-check (`tsc -b`) and build  |
-| `pnpm lint`    | Lint with `oxlint`               |
-| `pnpm preview` | Preview the production build     |
+| Script         | Description                     |
+| -------------- | ------------------------------- |
+| `pnpm dev`     | Start the Vite dev server       |
+| `pnpm build`   | Type-check (`tsc -b`) and build |
+| `pnpm lint`    | Lint with `oxlint`              |
+| `pnpm preview` | Preview the production build    |
 
 ---
 
@@ -197,26 +197,29 @@ All note endpoints are **protected** — they require a valid session cookie (`t
 | GET    | `/check-auth` | Verify the session, return user |
 
 **Register** request body:
+
 ```json
 { "name": "Jane Doe", "email": "jane@example.com", "password": "secret123" }
 ```
 
 **Login** request body:
+
 ```json
 { "email": "jane@example.com", "password": "secret123" }
 ```
 
 ### Notes — `/api/notes`
 
-| Method | Endpoint  | Description                        |
-| ------ | --------- | ---------------------------------- |
-| POST   | `/`       | Create a note                      |
-| GET    | `/`       | List all notes for the logged-in user |
-| GET    | `/:id`    | Get a single note                  |
-| PUT    | `/:id`    | Update a note                      |
-| DELETE | `/:id`    | Delete a note                      |
+| Method | Endpoint | Description                           |
+| ------ | -------- | ------------------------------------- |
+| POST   | `/`      | Create a note                         |
+| GET    | `/`      | List all notes for the logged-in user |
+| GET    | `/:id`   | Get a single note                     |
+| PUT    | `/:id`   | Update a note                         |
+| DELETE | `/:id`   | Delete a note                         |
 
 **Create / Update** request body:
+
 ```json
 { "title": "Grocery list", "content": "Milk, eggs, bread" }
 ```
@@ -225,12 +228,12 @@ All note endpoints are **protected** — they require a valid session cookie (`t
 
 ## 🗺️ Routing (Frontend)
 
-| Route       | Description                                        |
-| ----------- | -------------------------------------------------- |
-| `/`         | Redirects to `/notes`                              |
-| `/login`    | Login page                                         |
-| `/register` | Registration page                                  |
-| `/notes`    | Main notes dashboard (protected — requires login)  |
+| Route       | Description                                       |
+| ----------- | ------------------------------------------------- |
+| `/`         | Redirects to `/notes`                             |
+| `/login`    | Login page                                        |
+| `/register` | Registration page                                 |
+| `/notes`    | Main notes dashboard (protected — requires login) |
 
 ---
 
@@ -254,6 +257,4 @@ All note endpoints are **protected** — they require a valid session cookie (`t
 ## 📄 License
 
 This project is open source and available under the **ISC** license (see the backend `package.json`).
-
-
-
+````
